@@ -13,12 +13,12 @@ $('.time-block').each(function(){
   var currentTime = dayjs().hour();
   var changeColor = $(this).attr('id');
 
-  if (changeColor == currentTime) $(this).addClass("present").removeClass('future').removeClass('past')
-
-  if (changeColor > currentTime) $(this).addClass("future").removeClass('present').removeClass('past')
-
-  if (changeColor < currentTime) $(this).addClass("past").removeClass('future').removeClass('present')
-
+  if (changeColor == currentTime){ $(this).addClass("present").removeClass('future').removeClass('past');
+}
+else if(changeColor > currentTime){ $(this).addClass("future").removeClass('present').removeClass('past');
+} 
+else (changeColor < currentTime){$(this).addClass("past").removeClass('future').removeClass('present');
+}
   $(".time-block").on("click", ".saveBtn", function () {
     compareTime();
   });

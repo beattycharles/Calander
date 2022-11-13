@@ -20,36 +20,34 @@ else if(changeColor > currentTime) { $(this).addClass("future").removeClass('pre
 else { $(this).addClass("past").removeClass('future').removeClass('present');
 };
 
-  $(".time-block").on("click", ".saveBtn", function () {
-    var key = $(this).parent().attr("id")
-    var input = $(this).siblings('.description').val()
+//  $(".time-block").on("click", ".saveBtn", function () {
+  $(".saveBtn").on("click", function() {
+    var key = $(this).parent().attr("id");
+    var input = $(this).siblings('.description').val();
 
     localStorage.setItem(key, input);
     console.log(key, input);
-
-    var loadEvents = function(){
-      for (var i=8; i < 18; i++)
-      {
-        var eventBlock = $("input" + i + "]");
-        eventBlock.children(".description").text(localStorage.getItem(i));
-      }
-    };
-    loadEvents();
-    //get key and input from Appucation and put back into box.
   });
+  var inputEl = document.querySelectorAll(".description");
+  var inputRetrieve = (function(){
+    for (var i=9; i < 19; i++){
+      inputEl[i-9].value = localStorage.getItem(i)
+    }
+  })
+inputRetrieve();
+  // $("#9 .description").val(localStorage.getItem("9"));
+  // $("#10.description").val(localStorage.getItem("10"));
+  // $("#11 .description").val(localStorage.getItem("11"));
+  // $("#12 .description").val(localStorage.getItem("12"));
+  // $("#13 .description").val(localStorage.getItem("13"));
+  // $("#14 .description").val(localStorage.getItem("14"));
+  // $("#15 .description").val(localStorage.getItem("15"));
+  // $("#16 .description").val(localStorage.getItem("16"));
+  // $("#17 .description").val(localStorage.getItem("17"));
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
-
-  var loadEvents = function () {
-    for (var i = 0; i < 8; i++) {
-        var selectEventBlock = $("description" + i);
-        selectEventBlock.text(localStorage.getItem(i));
-    }
-  };
-  
-  loadEvents();
   // TODO: Add code to display the current date in the header of the page.
   $("#currentDay").text(dayjs().format("ddd, MMM, YYYY h:mm A "))
 });

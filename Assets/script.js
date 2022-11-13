@@ -7,37 +7,49 @@ $(document).ready(function () {
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
+  // useful when saving the description in local storage
 $('.time-block').each(function(){
 
   var currentTime = dayjs().hour();
   var changeColor = $(this).attr('id');
 
-  if (changeColor == currentTime){ $(this).addClass("present").removeClass('future').removeClass('past');
+  if (changeColor == currentTime) { $(this).addClass("present").removeClass('future').removeClass('past');
 }
-else if(changeColor > currentTime){ $(this).addClass("future").removeClass('present').removeClass('past');
+else if(changeColor > currentTime) { $(this).addClass("future").removeClass('present').removeClass('past');
 } 
-else (changeColor < currentTime){$(this).addClass("past").removeClass('future').removeClass('present');
-}
-  $(".time-block").on("click", ".saveBtn", function () {
-    compareTime();
-  });
+else { $(this).addClass("past").removeClass('future').removeClass('present');
+};
 
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  function compareTime() {
-  console.log(dayjs().format("HH"));
-  };
-//compare id to current hour
+  $(".time-block").on("click", ".saveBtn", function () {
+    var key = $(this).parent().attr("id")
+    var input = $(this).siblings('.description').val()
+
+    localStorage.setItem(key, input);
+    console.log(key, input);
+
+    var loadEvents = function(){
+      for (var i=8; i < 18; i++)
+      {
+        var eventBlock = $("input" + i + "]");
+        eventBlock.children(".description").text(localStorage.getItem(i));
+      }
+    };
+    loadEvents();
+    //get key and input from Appucation and put back into box.
+  });
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
-  //
+
+  var loadEvents = function () {
+    for (var i = 0; i < 8; i++) {
+        var selectEventBlock = $("description" + i);
+        selectEventBlock.text(localStorage.getItem(i));
+    }
+  };
+  
+  loadEvents();
   // TODO: Add code to display the current date in the header of the page.
   $("#currentDay").text(dayjs().format("ddd, MMM, YYYY h:mm A "))
 });
